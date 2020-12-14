@@ -3,7 +3,7 @@
 
   const select = {
     wrapper: {
-      bookList: '.books-list',
+      booksList: '.books-list',
       filters: '.filters',
     },
     templateOf: {
@@ -37,7 +37,7 @@
 
     getElements(){
       const thisBooksList = this;
-      thisBooksList.bookListWrapper = document.querySelector(select.wrapper.bookList);
+      thisBooksList.bookListWrapper = document.querySelector(select.wrapper.booksList);
       thisBooksList.filterWrapper = document.querySelector(select.wrapper.filters);
       thisBooksList.favoriteBooks = [];
       thisBooksList.filters = [];
