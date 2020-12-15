@@ -46,17 +46,10 @@
     renderLibrary(){
       const thisBooksList = this;
       for(let book of thisBooksList.data){
+        book.ratingBgc = thisBooksList.determineRatingBgc(book.rating);
         const generatedHTML = templates.book(book);
         const element = utils.createDOMFromHTML(generatedHTML);
         thisBooksList.bookListWrapper.appendChild(element);
-        /*
-        const ratingBgc = determineRatingBgc(book.rating);
-        const rating = element.querySelector('.book__rating__fill');
-        console.log(ratingBgc);
-        console.log(rating.getAttribute("style"));
-        rating.getAttribute("style")["background"] = ratingBgc;
-        console.log(rating.style);
-        */
       }
     }
 
@@ -94,16 +87,13 @@
         bgc = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
       }
       return bgc;
-    };
+    }
 
     initActions(){
       const thisBooksList = this;
       thisBooksList.bookListWrapper.addEventListener('dblclick', function(event){
         event.preventDefault();
         const clickedElement = event.target.offsetParent;
-        console.log(clickedElement);
-        console.log(clickedElement.classList.contains(classNames.bookImage));
-
         if(clickedElement.classList.contains(classNames.bookImage)){
           const id = clickedElement.getAttribute('data-id');
           if(!clickedElement.classList.contains(classNames.favoriteBook)){
@@ -114,11 +104,9 @@
             clickedElement.classList.remove(classNames.favoriteBook);
           }
         }
-        console.log(thisBooksList.favoriteBooks);
       });
       thisBooksList.filterWrapper.addEventListener('click', function(event){
         const clickedElement = event.target;
-        console.log('filters',thisBooksList.filters);
         if(clickedElement.tagName === 'INPUT' && clickedElement.type === 'checkbox' && clickedElement.name === 'filter' ){
           if(clickedElement.checked){
             thisBooksList.filters.push(clickedElement.value);
@@ -128,9 +116,13 @@
             thisBooksList.filterBooks();
           }
         }
-        console.log('filters again', thisBooksList.filters);
       });
     }
   }
-  const app = new BooksList(); // eslint-disable-line no-unused-vars
+  const app = {
+    initializeProject: function(){
+      new BooksList();
+    }
+  };
+  app.initializeProject();
 }
